@@ -14,15 +14,19 @@
 }
 .form-box{
     width: 380px;
-    height: 480px;
+    min-height: 300px;
+    /*height: auto;*/
     position: relative;
     margin: 6% auto;
-    background: black;
+    background-color:black;
     padding: 5px;
-    overflow: hidden;
+    sdisplay: flex;
+
+    /*overflow: auto;*/
 }
 .button-box{
     width: 220px;
+    height: 40px;
     margin: 35px auto;
     position: relative;
     box-shadow: 0 0 20px 9px #ff61241f;
@@ -46,19 +50,9 @@
     border-radius: 30px;
     transition: .5s;
 }
-.social-icons{
-    margin: 30px auto;
-    text-align: center;
-}
-.social-icons img{
-    width: 30px;
-    margin: 0 12px;
-    box-shadow: 0 0 20px 0 #7f7f7f3d;
-    cursor: pointer;
-    border-radius: 50%;
-}
+
 .input-group{
-    top: 180px;
+    top: 100px;
     position: absolute;
     width: 280px;
     transition: .5s;
