@@ -152,7 +152,8 @@
                 data: formDataObj1,
                 success: function (data) {
                     //login(1);
-                    alert(data);
+                    //alert(data);
+                    window.location.href='/userhome';
                     },
                 error: function (jqXhr, textStatus, errorMessage) {
                         $('p').append('Error' + errorMessage);

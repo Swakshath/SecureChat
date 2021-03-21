@@ -1,7 +1,9 @@
 const express = require('express');
 const mysql = require('mysql')
 const unirest = require('unirest');
+//const session = require('express-session')
 const router = express.Router();
+//router.use(session({secret: 'anything',saveUninitialized: true,resave: true}));
 
 var connection = mysql.createConnection({
     host     : 'localhost',
@@ -10,7 +12,7 @@ var connection = mysql.createConnection({
     database : 'securechat'
 });
 
-var otp;
+var otp,sess;
 
 // connect to mysql
 connection.connect(function(err) {
@@ -87,17 +89,37 @@ router.post('/checkotp',function(req,res){
 router.post('/loginsubmit',function(req,res){
   console.log('sentlogin'+JSON.stringify(req.body.phone));
   //var query1 = 'SELECT*from users where phone='+req.body.phone+' and pword="'+req.body.pword.toString()+'"';
-  var query1= 'SELECT*from users where phone="12345" and pword="abc"';
-  var row = connection.query(query1,async function(err,result){
-    console.log(result.length);
+  var query1= 'SELECT*from users where phone="'+req.body.phone+'"and pword="'+req.body.pword+'"';
+  //req.session.namew="op";
+  var sess = req.session;
+  var row = connection.query(query1,function(err,result){
+    console.log(result);
+    if(result.length>0)
+    {
+      //req.session.id=5;
+      console.log(result[0].userid);
+      sess.name=result[0].Username;
+        sess.id1=result[0].userid;
+        console.log(result[0].userid);
+        console.log(sess);
+        console.log(sess.id1);
+        console.log(sess.name);
+        //Object.defineProperty(this,'id',{value:req.sessionID});
+        //res.render('userhome');
+        res.send(sess.id1.toString());
+    }
+    else
+    {
     res.send(result.length.toString());
+    }
+    //res.send(req.session.name);
   });
   //console.log("herefirst"+row);
   //res.send(row.length);
 })
 
 router.get('/userhome',function(req,res){
-
+  res.render('userhome');
 })
 
 module.exports = router;

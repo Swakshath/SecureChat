@@ -15,6 +15,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(expressLayout);
+app.use(function(req, res, next) {
+    res.locals = req.session;
+    next();
+  })
 
 app.use('/',require('./routes/router.js'));
 
