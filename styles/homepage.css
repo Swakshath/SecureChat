@@ -6,7 +6,7 @@
 .banner{
     width: 100%;
     height: 100vh;
-    background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)),url(bg2.jpg);
+    background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)),url(bg.jpg);
     background-size: cover;
     background-position: center;
     position: absolute;

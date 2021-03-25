@@ -1,9 +1,10 @@
 const express = require('express');
 const mysql = require('mysql')
 const unirest = require('unirest');
-//const session = require('express-session')
 const router = express.Router();
-//router.use(session({secret: 'anything',saveUninitialized: true,resave: true}));
+const crypto = require('crypto');
+const randomstring = require('randomstring');
+const async = require('async');
 
 var connection = mysql.createConnection({
     host     : 'localhost',
@@ -14,9 +15,7 @@ var connection = mysql.createConnection({
 
 var otp,sess;
 
-// connect to mysql
 connection.connect(function(err) {
-    // in case of error
     if(err){
         console.log(err.code);
         console.log(err.fatal);
@@ -32,9 +31,11 @@ router.get('/login',function(req,res){
 })
 
 router.post('/otp',function(Req,res){
-    otp = Math.random();
-    otp = otp * 1000000;
-    otp = parseInt(otp);
+     
+otp = randomstring.generate({
+  length: 6,
+  charset: 'numeric'
+});
     console.log(otp);
     console.log((Req.body.phone))
        var req = unirest("POST", "https://www.fast2sms.com/dev/bulkV2");
@@ -59,15 +60,28 @@ router.post('/otp',function(Req,res){
         });*/
         
         res.send("Sent msg")
-        //Req=JSON.parse(Req.body)*/
         console.log("haere"+Req.body.phone);
         console.log(otp);
 })
 
-router.post('/regsubmit',function(req,res){
+router.post('/regsubmit',async function(req,res){
 
+  var query2 = 'SELECT*from users where phone="'+req.body.phone+'"';
+
+  await connection.query(query2,function(err,result1){
+      if(result1.length>0)
+      res.send("Phone number already exists");
+
+  })
+
+  var salt = randomstring.generate({
+    length: 6,
+    charset: 'alphanumeric'
+  });
     console.log(JSON.stringify(req.body))
-    var query1 = 'INSERT into users(Username,dob,gender,phone,pword,bio) values("op","'+req.body.dob+'","M","12345","abc","opqm")';
+    var hashpword = crypto.createHash('sha256').update(req.body.password+salt).digest('hex');
+    console.log(hashpword);
+    var query1 = 'INSERT into users(Username,dob,gender,phone,pword,bio,salt) values("op","'+req.body.dob+'","M","12345","'+hashpword+'","abc","'+salt+'")';
     connection.query(query1);
     res.send("done");
 })
@@ -89,13 +103,17 @@ router.post('/checkotp',function(req,res){
 router.post('/loginsubmit',function(req,res){
   console.log('sentlogin'+JSON.stringify(req.body.phone));
   //var query1 = 'SELECT*from users where phone='+req.body.phone+' and pword="'+req.body.pword.toString()+'"';
-  var query1= 'SELECT*from users where phone="'+req.body.phone+'"and pword="'+req.body.pword+'"';
+  var query1= 'SELECT*from users where phone="'+req.body.phone+'"';
   //req.session.namew="op";
   var sess = req.session;
   var row = connection.query(query1,function(err,result){
     console.log(result);
     if(result.length>0)
     {
+      var sentpword = crypto.createHash('sha256').update(req.body.pword+result[0].salt).digest('hex');
+      if(sentpword==result[0].pword)
+      {
+      console.log(req.body.phone);
       //req.session.id=5;
       console.log(result[0].userid);
       sess.name=result[0].Username;
@@ -107,6 +125,11 @@ router.post('/loginsubmit',function(req,res){
         //Object.defineProperty(this,'id',{value:req.sessionID});
         //res.render('userhome');
         res.send(sess.id1.toString());
+      }
+      else
+      {
+        res.send("Invalid details");
+      }
     }
     else
     {
