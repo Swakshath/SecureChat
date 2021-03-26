@@ -31,48 +31,52 @@ router.get('/login',function(req,res){
 })
 
 router.post('/otp',function(Req,res){
+
+  var query2 = 'SELECT*from users where phone="'+Req.body.phone+'"';
+
+ connection.query(query2,function(err,result1){
+      if(result1.length>0)
+      res.send("0");
+      else
+      {
+        otp = randomstring.generate({
+          length: 6,
+          charset: 'numeric'
+        });
+            console.log(otp);
+            console.log((Req.body.phone))
+               var req = unirest("POST", "https://www.fast2sms.com/dev/bulkV2");
+                
+                /*req.headers({
+                  "authorization": "Ewvy45UlsmRr9nihA387YteCPMKLq2OSIXQ1oFaJfjuBVN0dWHx9E5gykXIUDNl2zKQMFLj08fba1YCq"
+                });
+            
+                var num=(Req.body.phone).toString()
+                console.log('jk'+num)
+                /*req.form({
+                  "message": "Your otp for SecureChat login is "+otp,
+                  "language": "english",
+                  "route": "q",
+                  "numbers": (Req.body.mobile).toString()
+                });
+                
+                req.end(function (res) {
+                  if (res.error) throw new Error(res.error);
+                
+                  console.log(res.body);
+                });*/
+                
+                res.send("1")
+                console.log("haere"+Req.body.phone);
+                console.log(otp);
+        
+      }
+
+  })
      
-otp = randomstring.generate({
-  length: 6,
-  charset: 'numeric'
-});
-    console.log(otp);
-    console.log((Req.body.phone))
-       var req = unirest("POST", "https://www.fast2sms.com/dev/bulkV2");
-        
-        /*req.headers({
-          "authorization": "Ewvy45UlsmRr9nihA387YteCPMKLq2OSIXQ1oFaJfjuBVN0dWHx9E5gykXIUDNl2zKQMFLj08fba1YCq"
-        });
-    
-        var num=(Req.body.phone).toString()
-        console.log('jk'+num)
-        /*req.form({
-          "message": "Your otp for SecureChat login is "+otp,
-          "language": "english",
-          "route": "q",
-          "numbers": (Req.body.mobile).toString()
-        });
-        
-        req.end(function (res) {
-          if (res.error) throw new Error(res.error);
-        
-          console.log(res.body);
-        });*/
-        
-        res.send("Sent msg")
-        console.log("haere"+Req.body.phone);
-        console.log(otp);
 })
 
 router.post('/regsubmit',async function(req,res){
-
-  var query2 = 'SELECT*from users where phone="'+req.body.phone+'"';
-
-  await connection.query(query2,function(err,result1){
-      if(result1.length>0)
-      res.send("Phone number already exists");
-
-  })
 
   var salt = randomstring.generate({
     length: 6,
@@ -81,7 +85,7 @@ router.post('/regsubmit',async function(req,res){
     console.log(JSON.stringify(req.body))
     var hashpword = crypto.createHash('sha256').update(req.body.password+salt).digest('hex');
     console.log(hashpword);
-    var query1 = 'INSERT into users(Username,dob,gender,phone,pword,bio,salt) values("op","'+req.body.dob+'","M","12345","'+hashpword+'","abc","'+salt+'")';
+    var query1 = 'INSERT into users(Username,dob,gender,phone,pword,bio,salt,email,propic) values("'+req.body.username+'","'+req.body.dob+'","M","'+req.body.phone+'","'+hashpword+'","abc","'+salt+'","'+req.body.email+'","../styles/default.png")';
     connection.query(query1);
     res.send("done");
 })
@@ -117,6 +121,7 @@ router.post('/loginsubmit',function(req,res){
       //req.session.id=5;
       console.log(result[0].userid);
       sess.name=result[0].Username;
+      sess.pic=result[0].propic.toString();
         sess.id1=result[0].userid;
         console.log(result[0].userid);
         console.log(sess);
@@ -124,16 +129,16 @@ router.post('/loginsubmit',function(req,res){
         console.log(sess.name);
         //Object.defineProperty(this,'id',{value:req.sessionID});
         //res.render('userhome');
-        res.send(sess.id1.toString());
+        res.send("1");
       }
       else
       {
-        res.send("Invalid details");
+        res.send("0");
       }
     }
     else
     {
-    res.send(result.length.toString());
+    res.send("0");
     }
     //res.send(req.session.name);
   });
