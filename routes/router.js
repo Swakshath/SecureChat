@@ -5,22 +5,9 @@ const router = express.Router();
 const crypto = require('crypto');
 const randomstring = require('randomstring');
 const async = require('async');
+const connection = require('../connection.js');
 
-var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : '',
-    database : 'securechat'
-});
-
-var otp,sess;
-
-connection.connect(function(err) {
-    if(err){
-        console.log(err.code);
-        console.log(err.fatal);
-    }
-});
+var otp,sess; 
 
 router.get('/', function(req,res){
     res.render('homepage')
@@ -85,7 +72,7 @@ router.post('/regsubmit',async function(req,res){
     console.log(JSON.stringify(req.body))
     var hashpword = crypto.createHash('sha256').update(req.body.password+salt).digest('hex');
     console.log(hashpword);
-    var query1 = 'INSERT into users(Username,dob,gender,phone,pword,bio,salt,email,propic) values("'+req.body.username+'","'+req.body.dob+'","M","'+req.body.phone+'","'+hashpword+'","abc","'+salt+'","'+req.body.email+'","../styles/default.png")';
+    var query1 = 'INSERT into users(Username,dob,gender,phone,pword,bio,salt,email,propic) values("'+req.body.username+'","'+req.body.dob+'","M","'+req.body.phone+'","'+hashpword+'","abc","'+salt+'","'+req.body.email+'","default.png")';
     connection.query(query1);
     res.send("done");
 })
@@ -146,8 +133,9 @@ router.post('/loginsubmit',function(req,res){
   //res.send(row.length);
 })
 
-router.get('/userhome',function(req,res){
+
+/*router.get('/user/home',function(req,res){
   res.render('userhome');
-})
+})*/
 
 module.exports = router;

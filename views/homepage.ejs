@@ -14,7 +14,7 @@
                 </ul>
             </div>
             <div class="content">
-                <h1>SecureChast</h1>
+                <h1>SecureChat</h1>
                 <p>A chat website1 which alows users to securely communicate with each other 
                     <br>and retains the privacy of users.</p>
                 <div>
@@ -29,6 +29,7 @@
                     <button type="button" class="toggle-btn" onclick="login(0)">Log In</button>
                     <button type="button" class="toggle-btn" onclick="register()">Register</button>
                 </div>
+                <center>
                 <form id="login" class="input-group" style="color:black;" onsubmit="loginsub(); return false;" method="post">
 <div id="sucreg">
                         Successfully registered! Login now!
@@ -36,27 +37,35 @@
                     
                     <input type="text" class="input-field" name="phone" size="10" placeholder="Enter your phone number" pattern="[0-9]{10}" required title="Must have only 10digits">
                     <input type="password" name="pword" class="input-field" placeholder="Enter Password" required>
-                    <input type="checkbox" class="chech-box"><span>Remember Password</span>
+                    <!--<input type="checkbox" class="chech-box"><span>Remember Password</span>-->
+                    <br><br><br><br><br>
                     <button type="submit" class="submit-btn">Log In</button><br>
                 </form>
                 <form id="register" class="input-group" onsubmit="regotp(); return false;" method="post">
-                    <input type="text" class="input-field" name="username" placeholder="Enter your full name" pattern="[A-Za-z]{5,32}" required title="Must have min 5characters">
+                    <input type="text" class="input-field" name="username" placeholder="Enter your full name" pattern="[A-Za-z]{5,32}" required1 title="Must have min 5characters">
                     <!--<input type="number" class="input-field" name="age"  placeholder="Enter your age" pattern="[0-9]{2}" min="10" max="100" required title="Enter a value between 10-100">-->
-                    <input type="date" class="input-field" name="dob" placeholder="Enter your Date of birth" required>
-                    <input type="email" class="input-field" name="email" placeholder="Email Id" required >
-                    <input type="text" class="input-field" name="phone" id="phone" size="10" placeholder="Enter your phone number" pattern="[0-9]{10}" required title="Must have only 10digits">
+                    <input type="date" class="input-field" name="dob" placeholder="Enter your Date of birth" required1>
+                    <input type="email" class="input-field" name="email" placeholder="Email Id" required1 >
+                    <input type="text" class="input-field" name="phone" id="phone" size="10" placeholder="Enter your phone number" pattern="[0-9]{10}" required1 title="Must have only 10digits">
                     <p>Select Gender:</p>
                     <input type="radio" name="gender" value="male"> Male </input>
                     <input type="radio" name="gender" value="female"> Female  </input>
-                    <input type="password" class="input-field" name="password" placeholder="Enter Password" required  >
-                    <input type="password" class="input-field" name="cpassword" placeholder="Confirm Password" required>
-                    <input type="checkbox" class="chech-box"><span>I agree to the terms and conditions</span>
+                    <input type="password" class="input-field" name="password" placeholder="Enter Password" required1  >
+                    <input type="password" class="input-field" name="cpassword" placeholder="Confirm Password" required1>
+                    <br>
+                    <input type="checkbox" class="chech-box">I agree to the terms and conditions
                     <button type="submit" class="submit-btn">Register</button><br>
                 </form>
                 <form id="otp" class="input-group" onsubmit="otpenter(); return false;" method="post">
-                    <input type="text" class="input-field" name="otpent" placeholder="Enter OTP" required>
+                    <br><br><div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:black;">An OTP has been sent to your registered mobile number
+                    </div>
+                    <div style="position:absolute; top:40%; left:20%;">
+                    <input type="text"  style="position:relative; top:40%;" class="input-field" name="otpent" placeholder="Enter OTP" required>
+                    <br><br>
                     <button type="submit" class="submit-btn">Submit</button>
+                    </div>
                 </form>
+                </center>
         </div>
         </div>
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -104,7 +113,7 @@
                 var myform = document.getElementById("register");
                 var fd = new FormData(myform);
                 userdets = Object.fromEntries(fd.entries())
-                $.ajax('/otp', {
+                $.ajax('/home/otp', {
                 type: 'POST', 
                 data: { phone:$('#phone').val() }, 
                 success: function (data) {
@@ -134,7 +143,7 @@
                 var fd = new FormData(myform);
                 var formDataObj = Object.fromEntries(fd.entries())
                 console.log('formdataobj'+JSON.stringify(formDataObj))
-                $.ajax('/checkotp', {
+                $.ajax('/home/checkotp', {
                 type: 'POST', 
                 data: formDataObj,
                 success: function (data) {
@@ -155,7 +164,7 @@
             }
 
             function regsubmit(){
-                $.ajax('/regsubmit', {
+                $.ajax('/home/regsubmit', {
                 type: 'POST', 
                 data: userdets, 
                 success: function (data) {
@@ -176,7 +185,7 @@
                 var fd1 = new FormData(myform1);
                 var formDataObj1 = Object.fromEntries(fd1.entries())
                 console.log(formDataObj1);
-                $.ajax('/loginsubmit', {
+                $.ajax('/home/loginsubmit', {
                 type: 'POST', 
                 data: formDataObj1,
                 success: function (data) {
@@ -185,7 +194,7 @@
                     if(data=="0")
                         alert("Invalid Username/Password");
                     else
-                        window.location.href='/userhome';
+                        window.location.href='/user';
                     },
                 error: function (jqXhr, textStatus, errorMessage) {
                         $('p').append('Error' + errorMessage);

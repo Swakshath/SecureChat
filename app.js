@@ -5,6 +5,7 @@ const path = require('path');
 const expressLayout = require('express-ejs-layouts');
 const cors = require('cors');
 const session = require('express-session')
+const mysql=require('mysql');
 app.set('views', path.join(__dirname,'views'));
 app.set('view engine','ejs');
 
@@ -20,7 +21,14 @@ app.use(function(req, res, next) {
     next();
   })
 
-app.use('/',require('./routes/router.js'));
+
+app.get('/',function(req,res){
+  res.redirect('/home');
+})
+
+app.use('/user',require('./routes/userrouter.js'));
+app.use('/home',require('./routes/router.js'));
+
 
 app.listen(port,function(){
     console.log("Started1 running");

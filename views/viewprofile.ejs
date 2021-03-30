@@ -1,0 +1,98 @@
+<html>
+    <head>
+    <title>View Profile</title>
+    <link rel="stylesheet" type="text/css" href="../styles/viewprofile.css">
+</head>
+<body background="../styles/viewprofilebg.jpg">
+	<center>
+		<div class="profile">
+			<img id="dispimg" src="/styles/propics/<%= data[0].propic %>" class="pic">	
+			<form class="profiler" enctype="multipart/form-data" action="/user/updatepro" method="post" > 
+				<input type="file" name="picc" id="picc" onchange="loadfile(event)" accept="image/*" >
+                <label for="picc">Edit profile pic</label>
+                <span id = "status"></span>
+                <input type="text" name="uname" id="uname" value="<%= data[0].username %>" placeholder="Username">
+                <input type="email" name="email" id="email" value="<%= data[0].email %>" placeholder="Email ID" disabled>
+                <input type="text" name="phone" id="phone"  value="<%= data[0].phone %>" placeholder="Number" disabled>
+                <input type="text" name="bio" id="bio" value="<%= data[0].bio %>" placeholder="Bio">
+                <input type="submit" name="submit" value="Save Changes">
+            </form>
+		</div>
+	</center>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+    <script>
+
+
+        var loadfile = function(event) {
+	    var image = document.getElementById('dispimg');
+        image.src="https://www.w3schools.com/images/lamp.jpg"
+	    image.src = URL.createObjectURL(event.target.files[0]);
+};
+
+        /*function updatepro()
+        {
+                var myform1 = document.getElementById("profile");
+                //console.log(myform1)
+                var fd1 = new FormData(myform1);
+                var formDataObj1 = Object.fromEntries(fd1.entries())
+                delete formDataObj1.picc;
+                console.log('formdataobj1'+JSON.stringify(formDataObj1));
+                $.ajax('/user/updatepro', {
+                type: 'POST', 
+                data: formDataObj1,
+                /*contentType: false,
+                processData: false,
+                success: function (data) {
+                    //login(1);
+                    //alert(data);
+                    //window.location.href="";
+                    alert(data);
+                    },
+                error: function (jqXhr, textStatus, errorMessage) {
+                        $('p').append('Error' + errorMessage);
+                        console.log(errorMessage);
+                    }
+                })
+
+
+
+        }*/
+
+$('.profiler').submit(function(e){
+     e.preventDefault(); 
+     $(this).ajaxSubmit({
+       contentType: 'application/json',
+       success: function(response){
+           alert(response);
+         console.log('image uploaded and form submitted');     
+       }
+   });
+     return false;
+});
+
+/*$(document).ready(function() {
+
+$('#picc').change(function() {
+   $("#status").empty().text("File is uploading...");
+   $(this).ajaxSubmit({
+       error: function(xhr) {
+   status('Error: ' + xhr.status);
+       },
+
+       success: function(response) {
+   $("#status").empty().text(response);
+           console.log(response);
+       }
+});
+   //Very important line, it disable the page refresh.
+return false;
+});    
+});*/
+
+    </script>
+</body>
+
+    
+</html>
