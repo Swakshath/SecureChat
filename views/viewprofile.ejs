@@ -6,10 +6,12 @@
 <body background="../styles/viewprofilebg.jpg">
 	<center>
 		<div class="profile">
-			<img id="dispimg" src="/styles/propics/<%= data[0].propic %>" class="pic">	
-			<form class="profiler" enctype="multipart/form-data" action="/user/updatepro" method="post" > 
-				<input type="file" name="picc" id="picc" onchange="loadfile(event)" accept="image/*" >
+			<img id="dispimg" src="/styles/propics/<%= data[0].propic %>" class="pic">
+            <form id="formid" method="post" enctype="multipart/form-data">
+            <input type="file" name="picc" id="picc" accept="image/*" >
+            </form>
                 <label for="picc">Edit profile pic</label>
+			<form class="profiler" enctype="multipart/form-data" action="/user/updatepro" method="post" > 
                 <span id = "status"></span>
                 <input type="text" name="uname" id="uname" value="<%= data[0].username %>" placeholder="Username">
                 <input type="email" name="email" id="email" value="<%= data[0].email %>" placeholder="Email ID" disabled>
@@ -60,6 +62,8 @@
 
         }*/
 
+$(document).ready(function(){
+
 $('.profiler').submit(function(e){
      e.preventDefault(); 
      $(this).ajaxSubmit({
@@ -71,6 +75,33 @@ $('.profiler').submit(function(e){
    });
      return false;
 });
+
+var formdata; 
+
+$('#picc').change(function(){
+    formdata = new FormData();
+    if($(this).prop('files').length > 0)
+    {
+        file =$(this).prop('files')[0];
+        formdata.append("picc", file);
+    }
+    console.log(formdata);
+    $('#formid').submit();
+})
+
+$('#formid').submit(function(){
+    $.ajax('/user/updatepropic/',{
+
+    data: formdata,
+    processData: false,
+    contentType: false,
+    success: function () {
+      alert("Image uploaded"); 
+    }
+  });
+})
+
+})
 
 /*$(document).ready(function() {
 

@@ -138,4 +138,8 @@ router.post('/loginsubmit',function(req,res){
   res.render('userhome');
 })*/
 
+router.get('/aboutus',function(req,res){
+  res.render('aboutus')
+})
+
 module.exports = router;

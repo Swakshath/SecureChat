@@ -1,1 +1,62 @@
-<%= locals.id1 %><%= locals.name %><img src= "/styles/propics/<%= locals.pic %>"> 
+<link rel="stylesheet" type="text/css" href="../styles/userhome.css">
+
+<center>
+    <div class="profile">
+       <a href=""><img src="swakshath.jpg"></a>
+       <div class="dots"></div>
+       <a href=""><button class="button"></button></a>
+       <br>
+       <table>
+          <tr>
+              <form id="searching">
+             <td>
+                <input type="text" id="numtofind" name="numtofind" class="search1" placeholder="Search">
+             </td>
+             <td>
+                <button type="submit">search</button>
+             </td>
+             </form>
+          </tr>
+       </table>
+       <div class="chat">
+       <%
+       var i;
+       for(i in result) {   
+       %>
+       <%- JSON.stringify(result[i]) %>
+       <a href="">
+        <div  class="chats">
+           <img class="pic" src="../styles/propics/"+locals.pic><h2>aaaaa<%- result[i].username %></h2>
+        </div>
+     </a> 
+     <hr>
+     
+            <% } %>
+    </div>
+    </div>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+
+<script>
+    $( "#searching" ).submit(function( event ) {
+    event.preventDefault();
+    $.ajax('/user/searchnum', {
+                type: 'POST', 
+                data: { numtofind:$('#numtofind').val() }, 
+                success: function (data) {
+                    if(data.succ==0)
+                        alert("No matching results");
+                    else
+                    {
+                        alert(JSON.stringify(data.searchedfor))
+                    }
+                    },
+                error: function (jqXhr, textStatus, errorMessage) {
+                        $('p').append('Error' + errorMessage);
+                        console.log(errorMessage);
+                    }
+                })
+    });    
+</script>
