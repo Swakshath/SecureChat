@@ -2,7 +2,7 @@
 
 <center>
     <div class="profile">
-       <a href=""><img src="swakshath.jpg"></a>
+       <a href=""><img src="../styles/propics/<%- locals.pic %>"></a>
        <div class="dots"></div>
        <a href=""><button class="button"></button></a>
        <br>
@@ -26,7 +26,7 @@
        <%- JSON.stringify(result[i]) %>
        <a href="">
         <div  class="chats">
-           <img class="pic" src="../styles/propics/"+locals.pic><h2>aaaaa<%- result[i].username %></h2>
+           <img class="pic" src="../styles/propics/<%- result[i].propic %>"><h2>aaaaa<%- result[i].username %></h2>
         </div>
      </a> 
      <hr>

@@ -11,13 +11,13 @@
             <input type="file" name="picc" id="picc" accept="image/*" >
             </form>
                 <label for="picc">Edit profile pic</label>
-			<form class="profiler" enctype="multipart/form-data" action="/user/updatepro" method="post" > 
+			<form class="profiler" method="post" id="profiler" onsubmit="updatepro(event)"> 
                 <span id = "status"></span>
                 <input type="text" name="uname" id="uname" value="<%= data[0].username %>" placeholder="Username">
                 <input type="email" name="email" id="email" value="<%= data[0].email %>" placeholder="Email ID" disabled>
                 <input type="text" name="phone" id="phone"  value="<%= data[0].phone %>" placeholder="Number" disabled>
                 <input type="text" name="bio" id="bio" value="<%= data[0].bio %>" placeholder="Bio">
-                <input type="submit" name="submit" value="Save Changes">
+                <button type="submit" name="submit">Save Changes</button>
             </form>
 		</div>
 	</center>
@@ -27,11 +27,11 @@
     <script>
 
 
-        var loadfile = function(event) {
+        /*var loadfile = function(event) {
 	    var image = document.getElementById('dispimg');
         image.src="https://www.w3schools.com/images/lamp.jpg"
 	    image.src = URL.createObjectURL(event.target.files[0]);
-};
+};*/
 
         /*function updatepro()
         {
@@ -62,36 +62,69 @@
 
         }*/
 
+        function updatepro(e){
+                var myform1 = document.getElementById("profiler");
+                console.log(myform1)
+                var fd1 = new FormData(myform1);
+                var formDataObj1 = Object.fromEntries(fd1.entries())
+                console.log(formDataObj1);
+                e.preventDefault();
+                $.ajax('/user/updatepro', {
+                type: 'POST', 
+                data: formDataObj1,
+                success: function () {
+                    //login(1);
+                    //alert(data);
+                 alert("done");   
+                 console.log("op")
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                        $('p').append('Error' + errorMessage);
+                        console.log(errorMessage);
+                    }
+                })
+            }
+
 $(document).ready(function(){
 
-$('.profiler').submit(function(e){
-     e.preventDefault(); 
-     $(this).ajaxSubmit({
-       contentType: 'application/json',
-       success: function(response){
-           alert(response);
-         console.log('image uploaded and form submitted');     
-       }
-   });
-     return false;
-});
-
 var formdata; 
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    
+    reader.onload = function(e) {
+      $('#dispimg').attr('src', e.target.result);
+    }
+    
+    reader.readAsDataURL(input.files[0]); // convert to base64 string
+  }
+}
 
 $('#picc').change(function(){
     formdata = new FormData();
     if($(this).prop('files').length > 0)
     {
         file =$(this).prop('files')[0];
+        /*var reader = new FileReader();
+        reader.onload = function() {
+        $('#dispimg').attr('src', reader.result);
+        }*/
+        //console.log(JSON.stringify(file))
+        //$('#dispimg').attr('src', JSON.stringify(file))
+        readURL(this)
         formdata.append("picc", file);
     }
     console.log(formdata);
     $('#formid').submit();
 })
 
-$('#formid').submit(function(){
-    $.ajax('/user/updatepropic/',{
+$('#formid').submit(function(e){
 
+    e.preventDefault();
+    $.ajax('/user/updatepropic/',{
+    
+    type: "POST",
     data: formdata,
     processData: false,
     contentType: false,

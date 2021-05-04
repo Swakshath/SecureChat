@@ -3,6 +3,7 @@ body{
     padding: 0; 
     box-sizing: border-box;
     background: black;
+    overflow-x: hidden;
 }
 .container{
     background: white;
@@ -21,17 +22,17 @@ body{
     background-position: center;
 }
 .text{
-    width: 60%;
+    width: 40%;
     padding: 10px 10px;
     text-align: absolute;
     position: absolute;
-    top: 40%;
-    left: 65%;
+    left: 58%;
+    top:40%;
     transform: translate(-20%,-50%);
     font-size: 20px;
 }
 .btn{
-    background: purple;
+    background:linear-gradient(to left, #010101, #016293);
     color: white;
     border: none;
     width: 25%;

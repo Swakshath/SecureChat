@@ -5,7 +5,8 @@ const userrouter = express.Router();
 const connection = require('../connection.js');
 var multer = require("multer");
 var formidable = require('formidable');
-var fs = require('fs')
+var fs = require('fs');
+const { connect } = require('../connection.js');
 /*var storage = multer.diskStorage({
     destination: function(req, file, callback){
         callback(null, './styles/propics'); // set the destination
@@ -49,6 +50,7 @@ userrouter.post('/updatepro',async function(req,res){
     var query2 = 'INSERT into users(Username,gender,propic) values("'+req.body.uname+'","M","default.png")';
     connection.query(query2);
     res.send("done111");*/
+    console.log("inserv")
     console.log('fifijf'+JSON.stringify(req.body));
     res.send("done");
     var query2 = 'UPDATE users set username="'+req.body.uname+'", bio = "'+req.body.bio+'" where userid = "'+req.session.id1+'"'
@@ -65,6 +67,13 @@ userrouter.post('/updatepropic',function(req, res){
       var newpath = 'C:/Users/Raj/Documents/SecureChat/styles/propics/' + req.session.id1 + '.jpg';
       fs.rename(oldpath, newpath, function (err) {
         if (err) throw err;
+        else 
+        {
+            var query2 = "UPDATE users set propic = '"+req.session.id1+".jpg' where userid = '"+req.session.id1+"'";
+            connection.query(query2);
+            var sess = req.session;
+            sess.pic=(req.session.id1+".jpg").toString();
+        }
         res.write('File uploaded and moved!');
         res.end();
       })
@@ -86,7 +95,7 @@ userrouter.post('/searchnum', function(req,res){
     })
 })
 
-userrouter.get('/chatpage', function(req, res){
+userrouter.get('/chatpage/a', function(req, res){
     res.render('chatpage');
 })
 
