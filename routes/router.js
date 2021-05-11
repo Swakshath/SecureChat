@@ -110,6 +110,7 @@ router.post('/loginsubmit',function(req,res){
       sess.name=result[0].Username;
       sess.pic=result[0].propic.toString();
         sess.id1=result[0].userid;
+        sess.phonenum = req.body.phone;
         console.log(result[0].userid);
         console.log(sess);
         console.log(sess.id1);

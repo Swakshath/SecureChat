@@ -1,11 +1,13 @@
 <html>
     <head>
+
     <title>View Profile</title>
     <link rel="stylesheet" type="text/css" href="../styles/viewprofile.css">
 </head>
-<body background="../styles/viewprofilebg.jpg">
+<body background="../styles/viewprofilebg1.jpg">
 	<center>
 		<div class="profile">
+            
 			<img id="dispimg" src="/styles/propics/<%= data[0].propic %>" class="pic">
             <form id="formid" method="post" enctype="multipart/form-data">
             <input type="file" name="picc" id="picc" accept="image/*" >
@@ -13,11 +15,11 @@
                 <label for="picc">Edit profile pic</label>
 			<form class="profiler" method="post" id="profiler" onsubmit="updatepro(event)"> 
                 <span id = "status"></span>
-                <input type="text" name="uname" id="uname" value="<%= data[0].username %>" placeholder="Username">
+                <b><input type="text" name="uname" id="uname" value="<%= data[0].username %>" placeholder="Username">
                 <input type="email" name="email" id="email" value="<%= data[0].email %>" placeholder="Email ID" disabled>
                 <input type="text" name="phone" id="phone"  value="<%= data[0].phone %>" placeholder="Number" disabled>
-                <input type="text" name="bio" id="bio" value="<%= data[0].bio %>" placeholder="Bio">
-                <button type="submit" name="submit">Save Changes</button>
+                <input type="text" name="bio" id="bio" value="<%= data[0].bio %>" placeholder="Bio"></b>
+                <button class="button5" type="submit" name="submit">Save Changes</button>
             </form>
 		</div>
 	</center>

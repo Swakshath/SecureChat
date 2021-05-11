@@ -1,7 +1,12 @@
 
-<link rel="stylesheet" type="text/css" href="../styles/chatpage.css">
+<link rel="stylesheet" type="text/css" href="../../styles/chatpage.css">
 
 <div id="chat-container">
+
+    <div id="search-container">
+        <input type="text" placeholder="SEARCH USER">
+
+    </div>
 
             <div id="conversation-list">
                 
@@ -11,22 +16,85 @@
             </div>
             <div id="chat-title">
                 <span>NAME</span>
-                
+                <div style=" font-family: 'Times New Roman', Times, serif;" >
+                    <button type="button" id="authent" name="authent" class="b">Authenticate</button>
+                  </div>
 
             </div>
             <div id="chat-message-list">
+                <% for (i in res1){
+                    if(res1[i].sender==locals.id1)
+                    { %>
                 <div class="message-row you-message">
-                    <div class="message-text">OK </div>
-                    <div class="message-time">April 4</div>
+                    <div class="message-text"><%- res1[i].content %> </div>
+                    <div class="message-time"><%- res1[i].created_at %></div>
                 </div>
+                <% }
+                else { %>
                 <div class="message-row other-message">
-                    <div class="message-text">OK cool</div>
-                    <div class="message-time">April 4</div>
+                    <div class="message-text"><%- res1[i].content %></div>
+                    <div class="message-time"><%- res1[i].created_at %></div>
                 </div>
+                <% }} %>
 
             </div>
             <div id="chat-form">
-                <input type="text" placeholder="SEND MESSAGE">
-        
+               
+                <input type="text" id="message" name="message" placeholder="SEND MESSAGE">
+                <div class="send">
+                    <div >
+                      <button id="send" name="send" type="button" class="btn">SEND</button>
+                    </div>
+              
         </div>
 </div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+
+
+<script>
+    $(document).ready(function(){
+
+
+        $('#send').click(function(){
+
+            if($('#message').val() == '')
+            {
+                return false;
+            }
+
+            var receiver = <%- (data.rece) %>
+            console.log(receiver)
+            $.ajax({
+                url:'/user/sendmsg',
+                type:'POST',
+                data:{msg:($('#message').val()), rec: receiver},
+                success: function(data) {
+                    location.reload()
+                    //alert(data)
+                }
+            })
+            
+        })
+
+        $('#authent').click(function(){
+
+            var receiver = <%- (data.rece) %>
+            $.ajax({
+                url:'/user/authenticate',
+                type:'POST',
+                data:{rec: receiver},
+                success: function(data) {
+                    //location.reload()
+                    //alert(data)
+                }
+            })
+
+
+
+        })
+
+    })
+
+</script>

@@ -1,0 +1,42 @@
+
+    <input type="text" name="otpent" id="otpent">
+    <button id="authentication" >Authenticate me</button>
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+
+        $('#authentication').click(function(){
+
+/*            if($('#otpent').val()==<%- res1.otpenter %>)
+            {
+                window.location.replace('/user/chatpage/'+<%- res1.rece %>)
+            }
+            else
+            {
+                alert("incorrect")
+            }*/
+
+            $.ajax({
+                url:'/user/sendauthen',
+                type:'POST',
+                data:{otpentered:$('#otpent').val(), rec:<%- res1.rece %>},
+                success: function(data) {
+                    //location.reload()
+                    if(data==1)
+                    {
+                        location.reload();
+                    }
+                    else {
+                        alert("Invalid otp")
+                    }
+                }
+            })
+    })
+
+    })
+</script>
