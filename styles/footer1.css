@@ -1,0 +1,152 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+.footerinfo{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins',sans-serif;
+  text-decoration: none;
+  background: url('pagesbg.JPG');
+  bottom:0;
+  width: 143rem;
+  box-sizing: border-box;
+  display: flex;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.phone, .email1{
+  color:white;
+}
+footer{
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  background: url('pagesbg.JPG');
+}
+footer .content1{
+  max-width: 1350px;
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+footer .content1 p{
+  color: #fff;
+}
+footer .content1 .box{
+  width: 50%;
+  transition: all 0.4s ease;
+}
+footer .content1 .topic{
+  font-size: 22px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 16px;
+
+}
+footer .content1 p{
+  text-align: justify;
+}
+footer .content1 .lower .topic{
+  margin: 24px 0 5px 0;
+}
+footer .content1 .lower i{
+  padding-right: 16px;
+}
+footer .content1 .middle{
+  padding-left: 80px;
+}
+footer .content1 .middle a{
+  line-height: 32px;
+}
+footer .content1 .right input[type="text"]{
+  height: 45px;
+  width: 100%;
+  outline: none;
+  color: #d9d9d9;
+  background: #000;
+  border-radius: 5px;
+  padding-left: 10px;
+  font-size: 17px;
+  border: 2px solid #222222;
+}
+footer .content1 .right input[type="submit"]{
+  height: 42px;
+  width: 100%;
+  font-size: 18px;
+  color: #d9d9d9;
+  background: white;
+  outline: none;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 12px;
+  border: 2px solid white;
+  transition: all 0.3s ease-in-out;
+}
+.content1 .right input[type="submit"]:hover{
+  background: none;
+  color:  white;
+}
+footer .content1 .media-icons a{
+  font-size: 16px;
+  height: 45px;
+  width: 45px;
+  display: inline-block;
+  text-align: center;
+  line-height: 43px;
+  border-radius: 5px;
+  border: 2px solid #222222;
+  margin: 30px 5px 0 0;
+  transition: all 0.3s ease;
+  color:white
+}
+.content1 .media-icons a:hover{
+  border-color:white;
+}
+footer .bottom{
+  width: 100%;
+  text-align: right;
+  color: #d9d9d9;
+  padding: 0 40px 5px 0;
+  display: flex;
+  justify-content: center;
+}
+footer .bottom a{
+  color: white;
+}
+footer a{
+  transition: all 0.3s ease;
+}
+footer a:hover{
+  color: white;
+}
+@media (max-width:1100px) {
+  footer .content1 .middle{
+    padding-left: 50px;
+  }
+}
+@media (max-width:950px){
+  footer .content1 .box{
+    width: 50%;
+  }
+  .content1 .right{
+    margin-top: 40px;
+  }
+}
+@media (max-width:560px){
+  footer{
+    position: relative;
+  }
+  footer .content1 .box{
+    width: 100%;
+    margin-top: 30px;
+  }
+  footer .content1 .middle{
+    padding-left: 0;
+  }
+}
+

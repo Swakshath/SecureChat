@@ -1,24 +1,32 @@
 body{
-	background-color: #c6d7eb ;
+	background-color:#f5f5f5;
 	margin-top: 0;
 	margin-left: 0;
+	overflow-x: hidden;
+	padding:0;
+	margin:0;
 }
 
 .profile{
 	width: 720px;
-	height: 200px;
-	background-color: white;
+	height: 100px;
 	margin-right: 20px;
 	background-color: #d9a5b3;
+	background: url('pagesbg.JPG');
 }
 img{
-	width: 49px;
-	height: 49px;
+	width: 70px;
+	height: 70px;
 	border-radius: 50%;
 	padding: 10px;
 	float: left;
 
 }
+.push {
+	height: 50px;
+  }
+
+
 .button{
 	width: 30px;
 	height: 30px;
@@ -49,9 +57,10 @@ button{
 	float: center;
 	color: blue; 
 	background-color: white;
-	width: auto;
+	width: 720px;
 	height: fit-content;
 	margin-top: 0px;
+	border-color: darkcyan;
 
 }
 a{
@@ -65,9 +74,9 @@ a{
 }
 h2{
 	padding-top: 5px;
-	padding-right: 300px;
 	font-family: italic;
 }
+
 hr{
 	width: 450px;
 
@@ -75,6 +84,8 @@ hr{
 .chats{
 	padding-top:5px;
 	background-color: white;
+	border-color: crimson;
+	padding-right: 10px;
 }
 .dots:after {
   content: '\2807';
@@ -88,6 +99,7 @@ hr{
 .abc{
   padding: 5px;
   border-radius: 12px;
+  background-color:white;
 }
 
 .modal {
@@ -126,4 +138,12 @@ hr{
 	color: #000;
 	text-decoration: none;
 	cursor: pointer;
+  }
+
+  #gotochat {
+	background: linear-gradient(to left, #010101, #016293);
+	height:5%;
+	width:40%;
+
+	color:white;
   }

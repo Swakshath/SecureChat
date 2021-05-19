@@ -1,10 +1,8 @@
-<html>
-    <head>
 
-    <title>View Profile</title>
+        
     <link rel="stylesheet" type="text/css" href="../styles/viewprofile.css">
-</head>
-<body background="../styles/viewprofilebg1.jpg">
+    <%- include('navbar'); %>
+<body style="background-color:#f5f5f5;">
 	<center>
 		<div class="profile">
             
@@ -22,10 +20,17 @@
                 <button class="button5" type="submit" name="submit">Save Changes</button>
             </form>
 		</div>
-	</center>
 
+
+    <%- include('footer') %>
+</center>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+    <style>
+        footer {
+            position:fixed;
+        }
+    </style>
     <script>
 
 
@@ -159,6 +164,3 @@ return false;
 
     </script>
 </body>
-
-    
-</html>

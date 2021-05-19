@@ -1,6 +1,43 @@
+<link rel="stylesheet" type="text/css" href="../../styles/authenticate.css">
 
-    <input type="text" name="otpent" id="otpent">
-    <button id="authentication" >Authenticate me</button>
+<link rel="stylesheet" type="text/css" href="../../styles/chatpage.css">
+<link rel="stylesheet" type="text/css" href="../../styles/footer.css">
+
+<% var path="../../styles/" %>   
+<%- include('navbar1'); %>
+<style>
+    .topnav {
+        top:0;
+        position: absolute;
+    }
+    body {
+        background-color: #f5f5f5;
+    }
+
+</style>
+<div class="encloser">
+    <div class="authbox">
+        <div class="authverify">
+            <p>This receiver has requested you to authenticate yourself. Kindly provide OTP to authenticate.</p>
+            <br>
+            <br>
+            <input style="color:black; border-bottom: 1px solid #999;" type="text" name="otpent" id="otpent" placeholder="Enter OTP" pattern="[0-9]{6}">
+            <br>
+            <br>
+            <button type="submit" id="authentication" class="authsubmit">Authenticate</button>
+        </div>
+    </div>
+    </div>
+    <center>
+   <%- include('footer') %>
+        </center>
+    <style>
+        footer {
+            bottom:0;
+            left:0;
+            position:absolute;    
+        }
+    </style>
 
 
 

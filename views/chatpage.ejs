@@ -1,6 +1,9 @@
 
 <link rel="stylesheet" type="text/css" href="../../styles/chatpage.css">
 
+<% var path="../../styles/" %>
+<%- include('navbar1'); %>
+<br><br><br>
 <div id="chat-container">
 
     <div id="search-container">
@@ -27,13 +30,13 @@
                     { %>
                 <div class="message-row you-message">
                     <div class="message-text"><%- res1[i].content %> </div>
-                    <div class="message-time"><%- res1[i].created_at %></div>
+                    <div class="message-time"><%- res1[i].created_at; %></div>
                 </div>
                 <% }
                 else { %>
                 <div class="message-row other-message">
                     <div class="message-text"><%- res1[i].content %></div>
-                    <div class="message-time"><%- res1[i].created_at %></div>
+                    <div class="message-time"><%- res1[i].created_at; %></div>
                 </div>
                 <% }} %>
 
@@ -48,6 +51,10 @@
               
         </div>
 </div>
+</div>
+<center>
+    <%- include('footer1') %>
+</center>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>

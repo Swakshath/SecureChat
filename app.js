@@ -31,5 +31,5 @@ app.use('/home',require('./routes/router.js'));
 
 
 app.listen(port,function(){
-    console.log("Started1 running");
+    console.log("Started running");
 });

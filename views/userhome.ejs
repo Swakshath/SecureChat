@@ -1,6 +1,8 @@
 <link rel="stylesheet" type="text/css" href="../styles/userhome.css">
+<%- include('navbar'); %>
 
 <center>
+  <br><br><br>
     <div id="myModal" class="modal">
 
         <!-- Modal content -->
@@ -11,10 +13,11 @@
             <img id="modalimg" class="pic" src=""><h2 id="modalname"></h2> 
             
           </div></p>
+          
+          <button id="gotochat">Chat now!</button>
         </div>
       
       </div>
-
 
     <div class="profile">
        <a href="/user/viewprofile"><img src="../styles/propics/<%- locals.pic %>"></a>
@@ -33,6 +36,7 @@
              </form>
           </tr>
        </table>
+
        <div class="chat">
        <%
        var i;
@@ -40,15 +44,32 @@
        %>
        <a href="/user/chatpage/<%- result[i].userid %>">
         <div  class="chats">
-           <img class="pic" src="../styles/propics/<%- result[i].propic %>"><h2><%- result[i].username %></h2>
+           <img class="pic" src="../styles/propics/<%- result[i].propic %>"><h2><%- result[i].Username %>
+            <% if(result[i].statusseen=="unseen") { %><div style="font-size: 16px; float: right; display: inline;"> Unread msgs </div><% } %>
+          </h2>
+          
         </div>
+
+          
+        
      </a> 
      <hr>
      
             <% } %>
     </div>
+    <div class="push"></div>
     </div>
+        <%- include('footer'); %>
+        
+</center>
 
+<% if(result.length<=4) { %>
+  <style>
+    footer {
+      position: absolute;
+    }
+  </style>
+  <% } %>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
@@ -75,14 +96,13 @@ window.onclick = function(event) {
                 success: function (data) {
                     if(data.succ==0)
                     {
-                        alert("No matching results");
-                        document.getElementById("modalsearched").innerHTML="no result"
+                        //alert("No matching results");
+                        document.getElementById("modalsearched").innerHTML="No matching results found!";
                         modal.style.display="block";
                     }
                     else
                     {
-                        alert(JSON.stringify(data.searchedfor));
-                        
+              
                         document.getElementById("modalimg").setAttribute("src", "../styles/propics/"+data.searchedfor.propic);
                         document.getElementById("modalname").innerHTML=data.searchedfor.Username
                         modal.style.display="block";

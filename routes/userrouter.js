@@ -22,7 +22,8 @@ var upload = multer({storage: storage});*/
 var otp;
 
 userrouter.get('/',function(req,res){
-        var query2 = 'SELECT username, phone, propic, userid from users where userid in (SELECT id1 from conv where id2 = "'+req.session.id1+'")';
+        var query2 = 'SELECT userid, Username, phone, propic, statusseen from users, conv where conv.id1=users.userid AND users.userid in (SELECT conv.id1 from conv where conv.id2 = "'+req.session.id1+'" order by datetime) AND conv.id2="'+req.session.id1+'"' ;
+        console.log(query2)
         connection.query(query2, function(err, result1){
             console.log('res1'+JSON.stringify(result1))
             res.render('userhome',{result: result1})
@@ -118,9 +119,12 @@ userrouter.get('/chatpage/:receiver', function(req, res){
                     console.log(mess)
                     result[i].content = bf.decode(Uint8Array.from(mess), Blowfish.TYPE.STRING)
                     console.log(result[i].created_at)
-                    result[i].created_at = result[i].created_at.toISOString().slice(0, 19).replace('T', ' ');
+                    result[i].created_at = result[i].created_at.toString();
                 }
                 res.render('chatpage', {data:recc, res1:result});
+                var query3 = 'UPDATE conv set statusseen="seen" where id2="'+req.session.id1+'" and id1= "'+recc.rece+'"'
+                console.log(query3);
+                connection.query(query3)
                 //res.send("done")
             })
         }
@@ -160,6 +164,7 @@ userrouter.get('/chatpage/:receiver', function(req, res){
 
                     res.render('authenticate', {res1:res1});
 
+
         }
 
         
@@ -184,6 +189,8 @@ userrouter.post('/sendmsg', function(req, res){
         console.log(query2)
         connection.query(query2, function(err, result){
             res.send("done")
+            var query3 = 'UPDATE conv set statusseen="unseen" where id1 = "'+req.session.id1+'" and id2 = "'+req.body.rec+'"';
+            connection.query(query3)
         })
     })
     //res.send("fone")
@@ -214,5 +221,12 @@ userrouter.post('/sendauthen', function(req, res){
     }
      
 })
+
+userrouter.get('/logout', function(req, res){
+    req.session.destroy();
+    res.redirect('/home');
+})
+
+
 
 module.exports = userrouter;

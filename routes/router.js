@@ -72,7 +72,7 @@ router.post('/regsubmit',async function(req,res){
     console.log(JSON.stringify(req.body))
     var hashpword = crypto.createHash('sha256').update(req.body.password+salt).digest('hex');
     console.log(hashpword);
-    var query1 = 'INSERT into users(Username,dob,gender,phone,pword,bio,salt,email,propic) values("'+req.body.username+'","'+req.body.dob+'","M","'+req.body.phone+'","'+hashpword+'","abc","'+salt+'","'+req.body.email+'","default.png")';
+    var query1 = 'INSERT into users(Username,dob,gender,phone,pword,bio,salt,email,propic) values("'+req.body.username+'","'+req.body.dob+'","'+req.body.gender+'","'+req.body.phone+'","'+hashpword+'","Hey there! Using Securechat","'+salt+'","'+req.body.email+'","default.png")';
     connection.query(query1);
     res.send("done");
 })
@@ -141,6 +141,24 @@ router.post('/loginsubmit',function(req,res){
 
 router.get('/aboutus',function(req,res){
   res.render('aboutus')
+})
+
+router.get('/admin', function(req, res){
+  console.log("Admin");
+  var query1 = 'SELECT userid, Username, dob, gender, phone, bio, email from users';
+  connection.query(query1, function(err, result){
+    var query2 = 'SELECT convid, id1, id2, datetime from conv';
+    connection.query(query2, function(err, result1){
+      var query3 = 'SELECT id1, id2 from authen';
+      connection.query(query3, function(err, result2){
+        res.render('admin', {data:result, datac:result1, dataa:result2});
+      })
+      
+    })
+
+
+  })
+
 })
 
 module.exports = router;

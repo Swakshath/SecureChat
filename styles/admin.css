@@ -1,0 +1,179 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html,body {
+    font-family: 'Open Sans';
+    height: 100%;
+    margin-bottom: 5%;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+
+  .adminbutton {
+      background-color:#016293;
+      color:white;
+      height:50px;
+      width:100px;
+  }
+  
+  .remuser {
+    color:white;
+    background-color: #8B0000;
+    height:30px;
+    width:100px;
+  }
+
+
+  
+  div#container {
+    height: 92%;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  
+  .sidebar {
+    width: 250px;
+    background:#171717;
+    float: left; 
+  }
+  
+  
+  ul#nav li {
+      list-style: none;
+    height:10px;
+      background-image: url("../images/success.png");
+      
+  }
+  ul#nav li span{
+    position:relative;
+  }
+  ul#nav li span img {
+      float: left;
+    display: block;
+    margin-left: 1px;
+    margin-top: 2px;
+  }
+  ul#nav li a {
+      color: #ccc;
+      display: block;
+      padding: 10px;
+      font-size: 0.8em;
+      width: 85%;
+      float: right;
+      border-bottom: 1px solid #444;
+      -webkit-transition: all 0.2s ease;	
+      -moz-transition: all 0.2s ease;
+      -ms-transition: all 0.2s ease;
+      -o-transition: all 0.2s ease;
+      transition: all 0.2s ease;
+  }
+  
+  ul#nav li a:hover {
+    background: #030303;
+    color: #fff;
+  }
+  
+  ul#nav li a.selected{
+    background: #030303;
+    color:#fff;
+  }
+  
+  
+  .content {
+    width: auto;
+    height: 100%;
+    background: #f5f5f5;
+    margin-left: 250px;
+    padding: 15px;
+  }
+  
+  .content p {
+    color: #424242;
+    font-size: 0.8em;
+  }
+  
+  div#box {
+    margin-top: 15px;
+  }
+  
+  div#box .box-top {
+    color: #fff;
+    text-shadow: 0 1px #000;
+    background: #2980b9;
+    padding: 5px;
+    padding-left: 15px;
+    font-weight: 300;
+  } 
+  
+  div#box .box-panel {
+    padding: 15px;
+    background: #fff;
+    color: #333;
+  }
+  
+  
+  
+  @media only screen and (max-width: 480px) {
+  
+    a.mobile {
+      display: block;
+      color: #fff;
+      background: #000;
+      text-align: center;
+      padding: 7px; 
+      cursor: pointer;
+    }
+  
+    a.mobile:active{
+      background: #474747;
+    }
+  
+  
+    .sidebar {
+      width: 100%;
+      display: none;
+      height: auto;
+    }
+  
+    .content {
+      margin-left: 0;
+    }
+  
+  
+  }
+  
+  
+  
+  @media only screen and (min-width: 480px) {
+    .sidebar {
+      height: 92%;
+      left: 0;
+      display: block;
+      position: absolute;
+    }
+    a.mobile {
+      display: none;
+    }
+  }
+
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }

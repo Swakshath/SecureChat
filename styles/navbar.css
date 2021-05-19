@@ -1,0 +1,28 @@
+.topnav {
+  margin:0;
+  overflow: hidden;
+  background:url('pagesbg.JPG');
+  width:100%;
+  top:0%;
+  left:0;
+  position: relative;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 30px;
+}
+
+.topnav div {
+  position:absolute;
+  top:15%;
+  left:40%;
+  color:white;
+  display:inline;
+  font-size: 35px;
+}
+
