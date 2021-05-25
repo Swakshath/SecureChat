@@ -1,24 +1,35 @@
 
 <link rel="stylesheet" type="text/css" href="../../styles/chatpage.css">
 
-<% var path="../../styles/" %>
+<% var path="../../styles/"; %>
+<% if(res1[0]) { var finaltime=JSON.stringify(res1[0].created_at); }
+    else {
+        var finaltime="0";
+    }
+    %>
 <%- include('navbar1'); %>
 <br><br><br>
 <div id="chat-container">
 
     <div id="search-container">
-        <input type="text" placeholder="SEARCH USER">
+        
 
     </div>
 
             <div id="conversation-list">
-                
+                <div class="user-details">
+                    <img src="../../styles/propics/<%= userdet[0].propic %>" alt="Profile pic" class="picture">
+                      <div class="details">
+                        <br>Number: <%= userdet[0].phone %><br>
+                        <br>Status: <%= userdet[0].bio %>
+                      </div>
+                  </div>
             </div>
             <div id="new-message-container">
-                <a href="#">+</a>
+                <button id="clearchat">Clear Conversation</button>
             </div>
             <div id="chat-title">
-                <span>NAME</span>
+                <span><%= userdet[0].Username %></span>
                 <div style=" font-family: 'Times New Roman', Times, serif;" >
                     <button type="button" id="authent" name="authent" class="b">Authenticate</button>
                   </div>
@@ -63,6 +74,7 @@
 <script>
     $(document).ready(function(){
 
+        var finaltime = <%- (finaltime) %>;
 
         $('#send').click(function(){
 
@@ -78,7 +90,14 @@
                 type:'POST',
                 data:{msg:($('#message').val()), rec: receiver},
                 success: function(data) {
-                    location.reload()
+                    
+                    var texta = `<div class="message-row you-message">
+                    <div class="message-text">${data.content}</div>
+                    <div class="message-time">${data.created_at}</div>
+                </div>`
+                $('#message').val("");
+                $('#chat-message-list').prepend(texta)
+                    //location.reload()
                     //alert(data)
                 }
             })
@@ -100,6 +119,41 @@
 
 
 
+        })
+
+        setInterval(function(){
+            var receiver = <%- (data.rece) %>;
+
+            $.ajax({
+                url: '/user/getnewchat',
+                type:'POST',
+                data: {rec:receiver, ftime:finaltime},
+                success: function(data1) {
+                    if(data1=="N")
+                        {}
+                    else {
+                        finaltime = data1.created_at;
+                        var texta = `<div class="message-row other-message">
+                            <div class="message-text">${data1.content}</div>
+                            <div class="message-time">${data1.created_at}</div>
+                            </div>`
+                        $('#chat-message-list').prepend(texta)
+                    }
+                }
+            })
+        }, 5000)
+
+        $('#clearchat').click(function(){
+            var receiver = <%- (data.rece) %>;
+            $.ajax ({
+                url:'/user/clearchat',
+                method:'post',
+                data:{receiver:receiver},
+                success:function(data)
+                {
+                    $('#chat-message-list').empty()
+                }
+            })
         })
 
     })

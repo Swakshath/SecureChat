@@ -61,7 +61,7 @@
                             <td><%- element.phone %></td>
                             <td><%- element.bio %></td>
                             <td><%- element.email %></td>
-                            <td><button class="remuser">Remove</button></td>
+                            <td><button class="remuser" onclick="deluser(<%= element.userid %>, this)">Remove</button></td>
                         </tr>
                         
                         <% }) %>
@@ -89,7 +89,7 @@
                             <td><%- element.id1 %></td>
                             <td><%- element.id2 %></td>
                             <td><%- element.datetime %></td>
-                            <td><button class="remuser">Delete</button></td>
+                            <td><button class="remuser" onclick="delconv(<%= element.convid %>, this)">Delete</button></td>
                         </tr>
                         
                         <% }) %>
@@ -114,7 +114,7 @@
                            
                             <td><%- element.id1 %></td>
                             <td><%- element.id2 %></td>
-                            <td><button class="remuser">Delete</button></td>
+                            <td><button class="remuser" onclick="delauth(<%= element.id1 %>, <%= element.id2 %>, this)">Delete</button></td>
                         </tr>
                         
                         <% }) %>
@@ -156,4 +156,47 @@
             $('#authentable').show();
         })
     })
+
+    function deluser(userid1, btn){
+        var row = btn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+        console.log(userid1)
+        $.ajax({
+            url:'/home/admindeluser',
+            method:'post',
+            data:{userid:userid1},
+            success:function(data){
+                window.location.reload()
+            }
+        })
+    }
+
+    function delconv(convid1, btn){
+        var row = btn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+        console.log(convid1)
+        $.ajax({
+            url:'/home/admindelconv',
+            method:'post',
+            data:{convid:convid1},
+            success:function(data){
+                //window.location.reload()
+            }
+        })
+    }
+
+    function delauth(authid1, authid2, btn){
+        var row = btn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+        console.log(authid1)
+        $.ajax({
+            url:'/home/admindelauth',
+            method:'post',
+            data:{authid1:authid1, authid2: authid2},
+            success:function(data){
+                //window.location.reload()
+            }
+        })
+    }
+    
 </script>

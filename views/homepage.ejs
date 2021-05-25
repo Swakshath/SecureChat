@@ -36,16 +36,16 @@
                     <button type="submit" class="submit-btn">Log In</button><br>
                 </form>
                 <form id="register" class="input-group" onsubmit="regotp(); return false;" method="post">
-                    <input type="text" class="input-field" name="username" placeholder="Enter your full name" pattern="[A-Za-z]{5,32}" required1 title="Must have at least 5 characters">
+                    <input type="text" class="input-field" name="username" placeholder="Enter your full name" pattern="[A-Za-z ]{5,32}" required title="Must have at least 5 characters">
                     <!--<input type="number" class="input-field" name="age"  placeholder="Enter your age" pattern="[0-9]{2}" min="10" max="100" required title="Enter a value between 10-100">-->
-                    <input type="date" class="input-field" name="dob" placeholder="Enter your Date of birth" required1>
-                    <input type="email" class="input-field" name="email" placeholder="Email Id" required1 >
-                    <input type="text" class="input-field" name="phone" id="phone" size="10" placeholder="Enter your phone number" pattern="[0-9]{10}" required1 title="Must have only 10digits">
-                    <br><br><label for="gender" style="color: gray;font-size: 15px;">Select gender:</label>
+                    <input type="date" class="input-field" name="dob" placeholder="Enter your Date of birth" required>
+                    <input type="email" class="input-field" name="email" placeholder="Email Id" required >
+                    <input type="text" class="input-field" name="phone" id="phone" size="10" placeholder="Enter your phone number" pattern="[0-9]{10}" required title="Must have only 10digits">
+                    <br><br><label for="gender" style="color: gray;font-size: 14px;">Select gender:</label>
                     <input type="radio" name="gender" value="M"> Male </input>
                     <input type="radio" name="gender" value="F"> Female  </input>
-                    <input type="password" class="input-field" name="password" placeholder="Enter Password" required1  >
-                    <input type="password" class="input-field" name="cpassword" placeholder="Confirm Password" required1>
+                    <input type="password" class="input-field" name="password" placeholder="Enter Password" required  >
+                    <input type="password" class="input-field" name="cpassword" placeholder="Confirm Password" required>
                     <br>
                     <input type="checkbox" class="chech-box" required>I agree to the terms and conditions
                     <button type="submit" class="submit-btn">Register</button><br>

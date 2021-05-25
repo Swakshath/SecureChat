@@ -14,7 +14,7 @@
             
           </div></p>
           
-          <button id="gotochat">Chat now!</button>
+          <button id="gotochat" value="">Chat now!</button>
         </div>
       
       </div>
@@ -105,6 +105,7 @@ window.onclick = function(event) {
               
                         document.getElementById("modalimg").setAttribute("src", "../styles/propics/"+data.searchedfor.propic);
                         document.getElementById("modalname").innerHTML=data.searchedfor.Username
+                        document.getElementById("gotochat").setAttribute("value", data.searchedfor.userid)
                         modal.style.display="block";
                     }
                     },
@@ -114,4 +115,16 @@ window.onclick = function(event) {
                     }
                 })
     });    
+
+    $(document).ready(function(){
+      $('#gotochat').click(function(){
+        $.ajax('/user/startnewchat', {
+          type:'post',
+          data:{recid:$('#gotochat').val()},
+          success: function(data) {
+              window.location.replace('/user/chatpage/'+$('#gotochat').val())
+          }
+        })
+      })
+    })
 </script>

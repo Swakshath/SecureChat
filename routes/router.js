@@ -44,7 +44,7 @@ router.post('/otp',function(Req,res){
                   "message": "Your otp for SecureChat login is "+otp,
                   "language": "english",
                   "route": "q",
-                  "numbers": (Req.body.mobile).toString()
+                  "numbers": (num).toString()
                 });
                 
                 req.end(function (res) {
@@ -159,6 +159,30 @@ router.get('/admin', function(req, res){
 
   })
 
+})
+
+router.post('/admindeluser', function(req, res){
+  var query1 = 'DELETE from users where userid = "'+req.body.userid+'"';
+  console.log(query1)
+  connection.query(query1);
+  res.send("done");
+})
+
+router.post('/admindelconv', function(req, res){
+  var query1 = 'DELETE from conv where convid = "'+req.body.convid+'"';
+  console.log(query1)
+  connection.query(query1);
+  var query2 = 'DELETE from conv_reply where conv_id = "'+req.body.convid+'"';
+  console.log(query2)
+  connection.query(query2)
+  res.send("done");
+})
+
+router.post('/admindelauth', function(req, res){
+  var query1 = 'DELETE from authen where id1 = "'+req.body.authid1+'" and id2 = "'+req.body.authid2+'"';
+  console.log(query1)
+  connection.query(query1);
+  res.send("done");
 })
 
 module.exports = router;
