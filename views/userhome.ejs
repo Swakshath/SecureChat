@@ -98,6 +98,7 @@ window.onclick = function(event) {
                     {
                         //alert("No matching results");
                         document.getElementById("modalsearched").innerHTML="No matching results found!";
+                        document.getElementById('gotochat').style.display="none";
                         modal.style.display="block";
                     }
                     else
@@ -105,6 +106,7 @@ window.onclick = function(event) {
               
                         document.getElementById("modalimg").setAttribute("src", "../styles/propics/"+data.searchedfor.propic);
                         document.getElementById("modalname").innerHTML=data.searchedfor.Username
+                        document.getElementById("gotochat").style.display="block";
                         document.getElementById("gotochat").setAttribute("value", data.searchedfor.userid)
                         modal.style.display="block";
                     }

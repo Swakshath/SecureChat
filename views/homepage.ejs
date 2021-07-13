@@ -8,7 +8,7 @@
             <div class="navbar">
             </div>
             <div class="content">
-                <h1>SecureChat</h1>
+                <h1><br>SecureChat<br>using OTP</h1>
                 <p>A chat website which alows users to securely communicate with each other 
                     <br>and retains the privacy of users.</p>
                 <div>
@@ -29,7 +29,7 @@
                         Successfully registered! Login now!
                     </div>
                     
-                    <input type="text" class="input-field" name="phone" size="10" placeholder="Enter your phone number" pattern="[0-9]{10}" required title="Must have only 10digits">
+                    <input type="text" class="input-field" name="phone" size="10" placeholder="Enter your phone number" pattern="[0-9]{10}" required title="Must have 10 digits">
                     <input type="password" name="pword" class="input-field" placeholder="Enter Password" required>
                     <!--<input type="checkbox" class="chech-box"><span>Remember Password</span>-->
                     <br><br><br><br><br>
@@ -40,7 +40,7 @@
                     <!--<input type="number" class="input-field" name="age"  placeholder="Enter your age" pattern="[0-9]{2}" min="10" max="100" required title="Enter a value between 10-100">-->
                     <input type="date" class="input-field" name="dob" placeholder="Enter your Date of birth" required>
                     <input type="email" class="input-field" name="email" placeholder="Email Id" required >
-                    <input type="text" class="input-field" name="phone" id="phone" size="10" placeholder="Enter your phone number" pattern="[0-9]{10}" required title="Must have only 10digits">
+                    <input type="text" class="input-field" name="phone" id="phone" size="10" placeholder="Enter your phone number" pattern="[0-9]{10}" required title="Must have 10 digits">
                     <br><br><label for="gender" style="color: gray;font-size: 14px;">Select gender:</label>
                     <input type="radio" name="gender" value="M"> Male </input>
                     <input type="radio" name="gender" value="F"> Female  </input>
@@ -198,6 +198,8 @@
                     //alert(data);
                     if(data=="0")
                         alert("Invalid Username/Password");
+                    else if(data=="2")
+                        window.location.replace('/home/admin');
                     else
                         window.location.href='/user';
                     },

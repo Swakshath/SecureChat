@@ -1,48 +1,51 @@
 const express = require('express');
-const mysql = require('mysql')
 const unirest = require('unirest');
 const userrouter = express.Router();
 const connection = require('../connection.js');
-var multer = require("multer");
 var formidable = require('formidable');
 var fs = require('fs');
-const { connect } = require('../connection.js');
 const Blowfish = require('egoroof-blowfish')
 const randomstring = require('randomstring')
-/*var storage = multer.diskStorage({
-    destination: function(req, file, callback){
-        callback(null, './styles/propics'); // set the destination
-    },
-    filename: function(req, file, callback){
-        callback(null, req.session.id1 + '.jpg'); // set the file name and extension
-    }
-});
-var upload = multer({storage: storage});*/
 
 var otp;
 
 userrouter.get('/',function(req,res){
+    if(!req.session.id1)
+      {
+          res.render('errorpage')
+      }
+      else {
         var query2 = 'SELECT userid, Username, phone, propic, statusseen from users, conv where conv.id1=users.userid AND users.userid in (SELECT conv.id1 from conv where conv.id2 = "'+req.session.id1+'" order by datetime) AND conv.id2="'+req.session.id1+'" order by conv.datetime desc' ;
         console.log(query2)
         connection.query(query2, function(err, result1){
             console.log('res1'+JSON.stringify(result1))
             res.render('userhome',{result: result1})
         })
-
+    }
   })
   
   userrouter.get('/viewprofile',function(req,res){
+      if(!req.session.id1)
+      {
+          res.render('errorpage')
+      }
+      else
+      {
     var query1 = "SELECT username, email, phone, bio, propic from users where userid =" + req.session.id1;
     var row = connection.query(query1, function(err,result){
     console.log(result[0]+req.session.id1);
 
     res.render('viewprofile',{data: result});
     })
-
+}
   })
   
 
 userrouter.post('/updatepro',async function(req,res){
+    if(!req.session.id1)
+      {
+          res.render('errorpage')
+      }
     /*upload(req,res,function(err) {
         if(err) {
             return res.end(err.toString());
@@ -54,15 +57,22 @@ userrouter.post('/updatepro',async function(req,res){
     var query2 = 'INSERT into users(Username,gender,propic) values("'+req.body.uname+'","M","default.png")';
     connection.query(query2);
     res.send("done111");*/
+    else
+    {
     console.log("inserv")
     console.log('fifijf'+JSON.stringify(req.body));
     res.send("done");
     var query2 = 'UPDATE users set username="'+req.body.uname+'", bio = "'+req.body.bio+'" where userid = "'+req.session.id1+'"'
     var resu = connection.query(query2);
-        
+    }
 })
 
 userrouter.post('/updatepropic',function(req, res){
+    if(!req.session.id1)
+      {
+          res.render('errorpage')
+      }
+      else {
     console.log('injeree'+JSON.stringify(req.body));
     var form = new formidable.IncomingForm();
     console.log('opbol')
@@ -81,10 +91,15 @@ userrouter.post('/updatepropic',function(req, res){
         res.write('File uploaded and moved!');
         res.end();
       })
-
-}) })
+    
+}) } })
 
 userrouter.post('/searchnum', function(req,res){
+    if(!req.session.id1)
+      {
+          res.render('errorpage')
+      }
+      else {
     console.log(req.body.numtofind);
     var query2 = 'SELECT Username, userid, propic from users where phone="'+req.body.numtofind+'"';
     var row = connection.query(query2, function(err,result){
@@ -97,9 +112,15 @@ userrouter.post('/searchnum', function(req,res){
             res.json({succ:"0"});
         }
     })
+}
 })
 
 userrouter.get('/chatpage/:receiver', function(req, res){
+    if(!req.session.id1)
+      {
+          res.render('errorpage')
+      }
+      else {
     console.log(req.params.receiver);
     var recc = {rece: req.params.receiver}
     console.log(recc)
@@ -137,50 +158,60 @@ userrouter.get('/chatpage/:receiver', function(req, res){
         }
         else
         {
-            otp = randomstring.generate({
-                length: 6,
-                charset: 'numeric'
-              });
-                  console.log(otp);
-                     /*var fastmsg = unirest("POST", "https://www.fast2sms.com/dev/bulkV2");
-                      
-                      fastmsg.headers({
-                        "authorization": "Ewvy45UlsmRr9nihA387YteCPMKLq2OSIXQ1oFaJfjuBVN0dWHx9E5gykXIUDNl2zKQMFLj08fba1YCq"
-                      });
-                  
-                      //var num=(Req.body.phone).toString()
-                      console.log('jk'+req.session.phonenum)
-                      /*fastmsg.form({
-                        "message": "Your otp for SecureChat login is "+otp,
-                        "language": "english",
-                        "route": "q",
-                        "numbers": (req.sess.phonenum).toString()
-                      });
-                      
-                      fastmsg.end(function (res) {
-                        if (res.error) throw new Error(res.error);
-                      
-                        console.log(res.body);
-                      });*/
-                      
-                     //res.send("1")
-                      console.log("haere"+req.session.phonenum);
+            var query5 = 'SELECT phone from users where userid = "'+req.session.id1+'"'
+            connection.query(query5, function(err, result3){
+                var numbertosend = result3[0].phone;
+                otp = randomstring.generate({
+                    length: 6,
+                    charset: 'numeric'
+                  });
                       console.log(otp);
-                        req.session.otpauth = otp;
-                      var res1 = {otpenter:otp, rece:req.params.receiver}
+                         var fastmsg = unirest("POST", "https://www.fast2sms.com/dev/bulkV2");
+                          
+                          fastmsg.headers({
+                            "authorization": "Ewvy45UlsmRr9nihA387YteCPMKLq2OSIXQ1oFaJfjuBVN0dWHx9E5gykXIUDNl2zKQMFLj08fba1YCq"
+                          });
+                      
+                          //var num=(Req.body.phone).toString()
+                          console.log('jk'+req.session.phonenum)
+                          fastmsg.form({
+                            "message": "Your otp for SecureChat authentication is "+otp,
+                            "language": "english",
+                            "route": "q",
+                            "numbers": (numbertosend).toString()
+                          });
+                          
+                          fastmsg.end(function (res) {
+                            if (res.error) throw new Error(res.error);
+                          
+                            console.log(res.body);
+                          });
+                          
+                         //res.send("1")
+                          console.log("haere"+req.session.phonenum);
+                          console.log(otp);
+                            req.session.otpauth = otp;
+                          var res1 = {otpenter:otp, rece:req.params.receiver}
+    
+                        res.render('authenticate', {res1:res1});
+            })
 
-                    res.render('authenticate', {res1:res1});
 
 
         }
 
         
     })
-   
+}
     
 })
 
 userrouter.post('/sendmsg', function(req, res){
+    if(!req.session.id1)
+      {
+          res.render('errorpage')
+      }
+      else {
     var tosenddata = {};
     tosenddata.content = req.body.msg;
     
@@ -194,7 +225,8 @@ userrouter.post('/sendmsg', function(req, res){
     var query1 = 'SELECT convid from conv where id1 = "'+req.session.id1+'" and id2 = "'+req.body.rec+'"'
     console.log(query1)
     connection.query(query1, function(err, result){
-        var d = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        var datevar = new Date()
+        var d = datevar.toISOString().slice(0, 19).replace('T', ' ');
         var query2 = 'INSERT into conv_reply(conv_id, content, created_at, sender) values ("'+result[0].convid+'", "'+mess+'", "'+d+'", "'+req.session.id1+'")';
         console.log(query2)
         tosenddata.created_at=d;
@@ -205,18 +237,30 @@ userrouter.post('/sendmsg', function(req, res){
         })
     })
     //res.send("fone")
+}
 })
 
 userrouter.post('/authenticate', function(req, res){
+    if(!req.session.id1)
+      {
+          res.render('errorpage')
+      }
+      else {
     console.log("onn")
     var query1 = 'INSERT into authen values ("'+req.session.id1+'", "'+req.body.rec+'")';
     console.log(query1);
     connection.query(query1, function(err, result){
         res.send("done")
     }) 
+}
 })
 
 userrouter.post('/sendauthen', function(req, res){
+    if(!req.session.id1)
+      {
+          res.render('errorpage')
+      }
+      else {
     console.log("came here")
     if(req.body.otpentered==req.session.otpauth)
     {
@@ -230,15 +274,26 @@ userrouter.post('/sendauthen', function(req, res){
     {
         res.send('0')
     }
-     
+}
 })
 
 userrouter.get('/logout', function(req, res){
+    if(!req.session.id1)
+      {
+          res.render('errorpage')
+      }
+      else {
     req.session.destroy();
     res.redirect('/home');
+      }
 })
 
 userrouter.post('/getnewchat', function(req, res){
+    if(!req.session.id1)
+      {
+          res.render('errorpage')
+      }
+      else {
     var receiver1 = req.body.rec;
     var query1 = 'SELECT created_at from conv_reply where conv_id in (select convid from conv where (id2="'+req.session.id1+'" and id1= "'+req.body.rec+'")) and conv_reply.created_at>(SELECT fromconv from conv where id1="'+req.session.id1+'" and id2= "'+req.body.rec+'") order by created_at desc' ;
     console.log(query1)
@@ -273,24 +328,37 @@ userrouter.post('/getnewchat', function(req, res){
             res.send("N")
 })
 
+      }
 })
 
 userrouter.post('/startnewchat', function(req, res){
+    if(!req.session.id1)
+      {
+          res.render('errorpage')
+      }
+      else {
     var d = new Date().toISOString().slice(0, 19).replace('T', ' ');
     var query1 = 'INSERT into conv(id1, id2, datetime, statusseen, fromconv) values("'+req.session.id1+'", "'+req.body.recid+'", "'+d+'", "seen", "0")';
     connection.query(query1)
     var query2 = 'INSERT into conv(id2, id1, datetime, statusseen, fromconv) values("'+req.session.id1+'", "'+req.body.recid+'", "'+d+'", "seen", "0")';
     connection.query(query2)
     res.send("done")
+      }
 })
 
 
 userrouter.post('/clearchat', function(req, res){
+    if(!req.session.id1)
+      {
+          res.render('errorpage')
+      }
+      else {
     var d = new Date().toISOString().slice(0, 19).replace('T', ' ');
     var query1 = 'UPDATE conv set fromconv = "'+d+'" where (id1="'+req.session.id1+'" and id2= "'+req.body.receiver+'")';
     console.log(query1)
     connection.query(query1);
     res.send("done");
+      }
 })
 
 

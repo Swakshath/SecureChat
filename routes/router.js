@@ -34,13 +34,13 @@ router.post('/otp',function(Req,res){
             console.log((Req.body.phone))
                var req = unirest("POST", "https://www.fast2sms.com/dev/bulkV2");
                 
-                /*req.headers({
+                req.headers({
                   "authorization": "Ewvy45UlsmRr9nihA387YteCPMKLq2OSIXQ1oFaJfjuBVN0dWHx9E5gykXIUDNl2zKQMFLj08fba1YCq"
                 });
             
                 var num=(Req.body.phone).toString()
                 console.log('jk'+num)
-                /*req.form({
+                req.form({
                   "message": "Your otp for SecureChat login is "+otp,
                   "language": "english",
                   "route": "q",
@@ -51,7 +51,7 @@ router.post('/otp',function(Req,res){
                   if (res.error) throw new Error(res.error);
                 
                   console.log(res.body);
-                });*/
+                });
                 
                 res.send("1")
                 console.log("haere"+Req.body.phone);
@@ -93,6 +93,14 @@ router.post('/checkotp',function(req,res){
 
 router.post('/loginsubmit',function(req,res){
   console.log('sentlogin'+JSON.stringify(req.body.phone));
+  if(req.body.phone=="1234567890" && req.body.pword=="admin")
+    {
+        var sess=req.session;
+        sess.admin="1";
+        sess.id1="1"
+        res.send("2")
+    }
+    else {
   //var query1 = 'SELECT*from users where phone='+req.body.phone+' and pword="'+req.body.pword.toString()+'"';
   var query1= 'SELECT*from users where phone="'+req.body.phone+'"';
   //req.session.namew="op";
@@ -132,6 +140,7 @@ router.post('/loginsubmit',function(req,res){
   });
   //console.log("herefirst"+row);
   //res.send(row.length);
+}
 })
 
 
@@ -145,6 +154,11 @@ router.get('/aboutus',function(req,res){
 
 router.get('/admin', function(req, res){
   console.log("Admin");
+  if(!req.session.admin)
+      {
+          res.render('errorpage')
+      }
+      else {
   var query1 = 'SELECT userid, Username, dob, gender, phone, bio, email from users';
   connection.query(query1, function(err, result){
     var query2 = 'SELECT convid, id1, id2, datetime from conv';
@@ -158,7 +172,7 @@ router.get('/admin', function(req, res){
 
 
   })
-
+      }
 })
 
 router.post('/admindeluser', function(req, res){
